@@ -1,23 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import fakedata from "./fakedata/index";
+import Course from "./Component/Course/Course";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import Cart from "./Component/Cart/Cart";
 
 function App() {
+  const [courses, setCourses] = useState(fakedata);
+  const [cart, setCart] = useState([]);
+
+  const handleAddCourse = (course) => {
+    const newCourse = [...cart, course];
+    setCart(newCourse);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="App-header d-flex">
+        <div>
+          <h2 className="ml-5">Course List</h2>
+          {courses.map((course) => (
+            <Course
+              course={course}
+              key={course.id}
+              handleAddCourse={handleAddCourse}
+            />
+          ))}
+        </div>
+        <div className="ml-4">
+          <h2>
+            Course Order Summary <FontAwesomeIcon icon={faShoppingCart} />
+            <span
+              className="badge badge-warning"
+              handleAddCourse={handleAddCourse}
+              cart={cart}
+            >
+              0
+            </span>
+          </h2>
+          <Cart cart={cart}></Cart>
+        </div>
       </header>
     </div>
   );
