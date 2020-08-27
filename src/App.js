@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import "./App.css";
 import fakedata from "./fakedata/index";
 import Course from "./Component/Course/Course";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import Cart from "./Component/Cart/Cart";
+import CartCount from "./Component/CartCount/CartCount";
 
 function App() {
-  const [courses, setCourses] = useState(fakedata);
+  const [courses] = useState(fakedata);
   const [cart, setCart] = useState([]);
 
-  const handleAddCourse = (course) => {
+  let handleAddCourse = (course) => {
     const newCourse = [...cart, course];
     setCart(newCourse);
   };
@@ -29,16 +28,7 @@ function App() {
           ))}
         </div>
         <div className="ml-4">
-          <h2>
-            Course Order Summary <FontAwesomeIcon icon={faShoppingCart} />
-            <span
-              className="badge badge-warning"
-              handleAddCourse={handleAddCourse}
-              cart={cart}
-            >
-              0
-            </span>
-          </h2>
+          <CartCount cart={cart}></CartCount>
           <Cart cart={cart}></Cart>
         </div>
       </header>
